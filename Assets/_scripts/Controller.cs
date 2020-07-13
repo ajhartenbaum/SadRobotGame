@@ -76,7 +76,19 @@ public class Controller : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.CompareTag("JumpPowerUp"))
-        SetPowerUp(1);
+        {
+            SetPowerUp(1);
+        }
+        if (other.gameObject.CompareTag("KeyPowerUp"))
+        {
+            SetPowerUp(2);
+        }
+        if (other.gameObject.CompareTag("Door") && CurrentPowerUp == 2)
+        {
+            other.gameObject.SetActive(false);
+        }
+
+
     }
 
     void CheckIfGrounded()
@@ -99,7 +111,6 @@ public class Controller : MonoBehaviour
     //Number is used to indicate what powerup is currently available
     void SetPowerUp(int PowerUp)
     {
-
         CurrentPowerUp = PowerUp;
     }
 }
