@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -10,6 +12,8 @@ public class Controller : MonoBehaviour
     Rigidbody2D rb;
     public float speed;
 
+    public Vector2 initalPosition;
+    private GameObject[] Doors;
 
     public float jumpForce;
     public float fallMultiplier = 2.5f;
@@ -29,9 +33,10 @@ public class Controller : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        initalPosition = rb.position;
         CurrentPowerUp = 0;
-        speed = 4;
-        jumpForce = 6;
+        speed = 5;
+        jumpForce = 10;
 
     }
 
@@ -85,7 +90,18 @@ public class Controller : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Door") && CurrentPowerUp == 2)
         {
-            other.gameObject.SetActive(false);
+            other.gameObject.GetComponent<Renderer>().enabled = false;
+        }
+        if (other.gameObject.CompareTag("KillBox"))
+        {
+            GetComponent<Rigidbody2D>().position = initalPosition;
+            Doors = GameObject.FindGameObjectsWithTag("Door");
+            foreach (GameObject g in Doors)
+            {
+                UnityEngine.Debug.Log("here");
+                g.gameObject.GetComponent<Renderer>().enabled = true;
+            }
+            SetPowerUp(0);
         }
 
 
