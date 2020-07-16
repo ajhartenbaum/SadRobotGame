@@ -80,7 +80,12 @@ public class Controller : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("JumpPowerUp"))
+        Vector2 doorLocation;
+        Vector2 offset;
+        offset.x = 0;
+        offset.y = -50;
+
+        if (other.gameObject.CompareTag("JumpPowerUp"))
         {
             SetPowerUp(1);
         }
@@ -90,16 +95,19 @@ public class Controller : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Door") && CurrentPowerUp == 2)
         {
+            doorLocation = other.gameObject.transform.position;
             other.gameObject.GetComponent<Renderer>().enabled = false;
+            other.gameObject.transform.position = doorLocation - offset;
         }
         if (other.gameObject.CompareTag("KillBox"))
         {
-            GetComponent<Rigidbody2D>().position = initalPosition;
+            rb.position = initalPosition;
             Doors = GameObject.FindGameObjectsWithTag("Door");
             foreach (GameObject g in Doors)
             {
-                UnityEngine.Debug.Log("here");
+                doorLocation = g.gameObject.transform.position;
                 g.gameObject.GetComponent<Renderer>().enabled = true;
+                g.gameObject.transform.position = doorLocation + offset;
             }
             SetPowerUp(0);
         }
