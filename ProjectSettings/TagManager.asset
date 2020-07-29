@@ -8,6 +8,10 @@ TagManager:
   - KeyPowerUp
   - Door
   - KillBox
+  - Ground
+  - GrapplePowerUp
+  - grappleArrow
+  - WallJumpPowerUp
   layers:
   - Default
   - TransparentFX
