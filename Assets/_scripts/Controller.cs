@@ -73,6 +73,7 @@ public class Controller : MonoBehaviour
             
     }
 
+    //basic movement controls
     void Move()
     {
         float x = Input.GetAxisRaw("Horizontal");
@@ -80,6 +81,7 @@ public class Controller : MonoBehaviour
         rb.velocity = new Vector2(moveBy, rb.velocity.y);
     }
 
+    //basic jump controls
     void Jump()
     {
         if(Input.GetKeyDown(KeyCode.Space) && (isGrounded || Time.time - lastTimeGrounded <= rememberGroundedFor))
@@ -97,6 +99,7 @@ public class Controller : MonoBehaviour
         }
     }
 
+    //code to allow player to wall-jump
     void WallJump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && (onWall || Time.time - lastTimeOnWall <= rememberWallFor))
@@ -166,6 +169,7 @@ public class Controller : MonoBehaviour
         }
     }
 
+    //check if player is on ground
     void CheckIfGrounded()
     {
         Collider2D collider = Physics2D.OverlapCircle(isGroundedChecker.position, checkGroundRadius, groundLayer);
@@ -200,6 +204,8 @@ public class Controller : MonoBehaviour
         }
     }
 
+    //grapple power up
+    //sets player gravity to 0, player moves in 1 direction until they hit a wall and/or hazard
     void ShootGrapple()
     {
         Vector2 startingPostion = rb.position;
